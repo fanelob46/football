@@ -1,12 +1,14 @@
 import { useState } from 'react'
 
-import NavBar from './Componeta/NavBar'
+import NavBar from './Componets/NavBar'
+import Leagues from './Componets/Leagues'
 
 function App() {
  
   return (
     <>
    <NavBar/>
+   <Leagues/>
     </>
   )
 }
