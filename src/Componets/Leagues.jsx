@@ -2,6 +2,9 @@ import React,{useState,useEffect} from 'react'
 import LeagueListing from './LeagueListing';
 import axios from 'axios';
 import leagues from '../Leagues.json'
+import Paginations from './Paginations';
+import ReactPaginate from 'react-paginate';
+
 
 const Leagues = () => {
 
@@ -9,6 +12,49 @@ const Leagues = () => {
   console.log(leagues);
 
   const [search, SetSearch] = useState('');
+  //const [currentPage, setCurrentPage] = useState(1);
+  //const [postsPerPage, setPostsPerPage] = useState(16);
+
+  const [league, setLeague] = useState(leagues.slice(0,100));
+  const [pageNumber, setPageNumber] = useState(0);
+
+  const leaguesPerPage = 8;
+  const pagesVisited = pageNumber * leaguesPerPage;
+
+ const displayLeagues = league
+ .slice(pagesVisited, pagesVisited + leaguesPerPage)
+ .filter((leg) => {
+  return search.toLocaleLowerCase() === ''
+  ? leg
+  : leg?.league?.name.toLocaleLowerCase().includes(search);
+}).map((leg) => 
+  < >
+
+  <div key={leg.id} leg={leg}>
+  <img  src={leg?.league?.logo}  className='w-20 h-20'/>
+  <h1> {leg?.league?.name}</h1>
+  
+  </div>
+  
+  
+  </>
+  
+)
+
+const pageCount = Math.ceil(league.length / leaguesPerPage);
+
+const changePage = ({selected}) => {
+
+setPageNumber(selected);
+
+};
+ 
+  
+
+
+  //const lastPostIndex = currentPage * postsPerPage;
+  //const firstPostIndex = lastPostIndex - postsPerPage;
+  //const popularLeagues = leagues.slice(firstPostIndex, lastPostIndex);
    /* const [data, setData] = useState([]); //state that stors fetched data
     
 
@@ -52,25 +98,32 @@ try {
     </form>
    </div>
 <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 py-8 justify-items-center'>
+  
   {
-    leagues.filter((leg) => {
-      return search.toLocaleLowerCase() === ''
-      ? leg
-      : leg?.league?.name.toLocaleLowerCase().includes(search);
-    }).map((leg) => 
-      < >
+   displayLeagues
     
-      <div key={leg.id} leg={leg}>
-      <img  src={leg?.league?.logo}  className='w-20 h-20'/>
-      <h1> {leg?.league?.name}</h1>
-      </div>
-      
-      </>
-    )
+    
   }
-     
+  <ReactPaginate 
+  
+  previousLabel={"Previous"}
+  nextLabel ={"Next"}
+  pageCount={pageCount}
+  onPageChange={changePage}
+  containerClassName={"flex"}
+  previousLinkClassName={""}
+  nextLinkClassName={""}
+  disabledClassName={""}
+  activeClassName={""}
+  />
       
+      
+      {/*<Paginations 
+        totalPosts={popularLeagues.length} 
+        postsPerPage={postsPerPage}
+        setCurrentPage={setCurrentPage}/>*/}
     </div>
+    
     </>
     
    
