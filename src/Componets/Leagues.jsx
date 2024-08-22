@@ -1,9 +1,15 @@
 import React,{useState,useEffect} from 'react'
 import LeagueListing from './LeagueListing';
 import axios from 'axios';
+import leagues from '../Leagues.json'
 
 const Leagues = () => {
-    const [data, setData] = useState([]); //state that stors fetched data
+
+
+  console.log(leagues);
+
+  const [search, SetSearch] = useState('');
+   /* const [data, setData] = useState([]); //state that stors fetched data
     
 
    useEffect(() => {
@@ -31,19 +37,34 @@ try {
       }
       fetchTeams();
       
-    }, [])
+    }, [])*/
    
 
 
   return (
-    <>
-<div>
+    
+   <>
+   <div>
+    <form>
+      <input 
+      placeholder='search league'
+      onChange={(e) => SetSearch(e.target.value)}/>
+    </form>
+   </div>
+<div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 py-8 justify-items-center'>
   {
-    data.map((leg) => 
+    leagues.filter((leg) => {
+      return search.toLocaleLowerCase() === ''
+      ? leg
+      : leg?.league?.name.toLocaleLowerCase().includes(search);
+    }).map((leg) => 
       < >
     
-      <h1> {leg?.league?.name}</h1>
+      <div key={leg.id} leg={leg}>
       <img  src={leg?.league?.logo}  className='w-20 h-20'/>
+      <h1> {leg?.league?.name}</h1>
+      </div>
+      
       </>
     )
   }
