@@ -14,51 +14,12 @@ const Leagues = () => {
   const [search, SetSearch] = useState('');
   //const [currentPage, setCurrentPage] = useState(1);
   //const [postsPerPage, setPostsPerPage] = useState(16);
-
-  const [league, setLeague] = useState(leagues.slice(0,100));
-  const [pageNumber, setPageNumber] = useState(0);
-
-  const leaguesPerPage = 8;
-  const pagesVisited = pageNumber * leaguesPerPage;
-
- const displayLeagues = league
- .slice(pagesVisited, pagesVisited + leaguesPerPage)
- .filter((leg) => {
-  return search.toLocaleLowerCase() === ''
-  ? leg
-  : leg?.league?.name.toLocaleLowerCase().includes(search);
-}).map((leg) => 
-  < >
-
-  <div key={leg.id} leg={leg}>
-  <img  src={leg?.league?.logo}  className='w-20 h-20'/>
-  <h1> {leg?.league?.name}</h1>
-  
-  </div>
-  
-  
-  </>
-  
-)
-
-const pageCount = Math.ceil(league.length / leaguesPerPage);
-
-const changePage = ({selected}) => {
-
-setPageNumber(selected);
-
-};
- 
-  
+  const [data, setData] = useState([]); //state that stores fetched data
 
 
-  //const lastPostIndex = currentPage * postsPerPage;
-  //const firstPostIndex = lastPostIndex - postsPerPage;
-  //const popularLeagues = leagues.slice(firstPostIndex, lastPostIndex);
-   /* const [data, setData] = useState([]); //state that stors fetched data
-    
+  //const [league, setLeague] = useState(leagues.slice(0,100));
 
-   useEffect(() => {
+  useEffect(() => {
     const fetchTeams = async () => {
       const url = 'https://api-football-v1.p.rapidapi.com/v3/leagues';
 const options = {
@@ -83,7 +44,53 @@ try {
       }
       fetchTeams();
       
-    }, [])*/
+    }, [])
+
+
+
+  const [pageNumber, setPageNumber] = useState(0);
+
+  const leaguesPerPage = 16;
+  const pagesVisited = pageNumber * leaguesPerPage;
+
+ const displayLeagues = data
+ .slice(pagesVisited, pagesVisited + leaguesPerPage)
+ .filter((leg) => {
+  return search.toLocaleLowerCase() === ''
+  ? leg
+  : leg?.league?.name.toLocaleLowerCase().includes(search);
+}).map((leg) => 
+  < >
+
+  <div key={leg.id} leg={leg}>
+  <img  src={leg?.league?.logo}  className='w-20 h-20'/>
+  <h1> {leg?.league?.name}</h1>
+  
+  </div>
+  
+  
+  </>
+  
+)
+
+const pageCount = Math.ceil(data.length / leaguesPerPage);
+
+const changePage = ({selected}) => {
+
+setPageNumber(selected);
+
+};
+ 
+  
+
+
+  //const lastPostIndex = currentPage * postsPerPage;
+  //const firstPostIndex = lastPostIndex - postsPerPage;
+  //const popularLeagues = leagues.slice(firstPostIndex, lastPostIndex);
+
+    
+
+  
    
 
 
@@ -110,11 +117,11 @@ try {
   nextLabel ={"Next"}
   pageCount={pageCount}
   onPageChange={changePage}
-  containerClassName={"flex"}
-  previousLinkClassName={""}
-  nextLinkClassName={""}
-  disabledClassName={""}
-  activeClassName={""}
+  containerClassName={"paginationBttns"}
+  previousLinkClassName={"previousBttn"}
+  nextLinkClassName={"nextBttn"}
+  disabledClassName={"paginationDisabled"}
+  activeClassName={"paginationActive"}
   />
       
       
