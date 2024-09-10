@@ -5,7 +5,12 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      screens:{
+        'kobus': '2012px',
+        'pc' : '1740px'
+      }
+    },
   },
   plugins: [],
 }

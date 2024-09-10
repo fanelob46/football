@@ -2,11 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
-.paginationBttns{
+/*.paginationBttns{
     width: 100%;
     height: 40px;
     display: flex;
     justify-content: center;
+    
     padding-left: 900px;
     padding-top: 30px;
     position: relative;
@@ -18,6 +19,7 @@
     border: 1px solid #2b2eff;
     color: #2b2eff;
     cursor: pointer;
+    
 }
 .paginationBttns a:hover {
     color: white;
@@ -27,4 +29,4 @@
 .paginationActive a {
     color: white;
     background-color: #2b2eff;
-}
+}*/
